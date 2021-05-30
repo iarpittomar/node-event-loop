@@ -1,4 +1,5 @@
 const EventEmitter = require("events");
+const http = require("http");
 
 class Sales extends EventEmitter {
   constructor() {
@@ -24,3 +25,25 @@ myEmitter.on("newSale", (stock) => {
 });
 
 myEmitter.emit("newSale", 9); //object that emits the event
+
+/////////////////////
+
+const server = http.createServer();
+
+server.on("request", (req, res) => {
+  console.log("Request received");
+  res.end("Request Received");
+});
+
+server.on("request", (req, res) => {
+  console.log("Another request");
+  //res.end("Another request");
+});
+
+server.on("close", () => {
+  console.log("Server closed");
+});
+
+server.listen(8000, "127.0.0.1", () => {
+  console.log("Waiting for request");
+});
